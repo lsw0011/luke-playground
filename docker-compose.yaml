@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+    playground:
+        container_name: playground
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        environment:
+            FLASK_APP: backend/app.py
+            PYTHONPATH: /code/backend
+        ports:
+            - 1111:1111
+        volumes:
+            - ./:/code
+        command: flask run --reload --host=0.0.0.0 --port=1111
