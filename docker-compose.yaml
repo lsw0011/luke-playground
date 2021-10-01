@@ -2,15 +2,27 @@ version: "3.7"
 
 services:
     playground:
-        container_name: playground
+        container_name: backend
         build:
             context: .
-            dockerfile: ./Dockerfile
+            dockerfile: ./backend/Dockerfile
         environment:
-            FLASK_APP: backend/app.py
-            PYTHONPATH: /code/backend
+            FLASK_APP: code/app.py
+            PYTHONPATH: /code
         ports:
             - 1111:1111
         volumes:
-            - ./:/code
+            - ./backend:/code
         command: flask run --reload --host=0.0.0.0 --port=1111
+
+
+    frontend:
+        container_name: frontend
+        build: 
+            context: .
+            dockerfile: ./frontend/Dockerfile
+        ports:
+            - 1112:1112
+        volumes:
+            - ./frontend:/app
+        command: npm run start-dev
