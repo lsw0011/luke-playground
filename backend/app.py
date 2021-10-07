@@ -1,26 +1,48 @@
-from flask import Flask, send_from_directory, render_template_string, make_response
+from typing import Dict
+from flask import Flask, send_from_directory, render_template_string, make_response, request
+from flask import json
 from flask.helpers import make_response
 from flask.json import jsonify
 from flask.templating import render_template, render_template_string
 from flask.wrappers import Response
 
+
 app = Flask(__name__)
 
-PATH_TO_TEMPLATES = "/code/frontend"
+# @app.route("/")
+# def build_cors_preflight_response():
+    # print(request)
+    # response = make_response()
+    # response.headers.add("Access-Control-Allow-Origin", "*")
+    # response.headers.add("Access-Control-Allow-Headers", "*")
+    # response.headers.add("Access-Control-Allow-Methods", "*")
 
-@app.route("/")
-def hello_world():
-    return send_from_directory(PATH_TO_TEMPLATES, "index.html")
-
-@app.route("/script.js")
-def js():
-    return send_from_directory(PATH_TO_TEMPLATES, "script.js")
-
-@app.route("/style.css")
-def css():
-    return send_from_directory(PATH_TO_TEMPLATES, "style.css")
-
-@app.route("/test")
-def test():
-    response = Flask.make_response(app,  render_template_string("test"))
+@app.route('/users')
+def users(): 
+    response = make_response(jsonify(dict(status = "ok", data = dict(name = "users") )))
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    response.headers.add("content-type", "application/json")
     return response
+
+
+@app.route('/surveys')
+def surveys(): 
+    response = make_response(jsonify(dict(status = "ok", data = dict(name = "surveys") )))
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    response.headers.add("content-type", "application/json")
+    return response
+
+
+@app.route('/')
+def home(): 
+    response = make_response(jsonify(dict(status = "ok", data = "home" )))
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    response.headers.add("content-type", "application/json")
+    return response
+
