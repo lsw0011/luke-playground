@@ -1,40 +1,45 @@
 import * as React from 'react'; 
 import { createStore } from 'redux'
+import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import Data from './redux/components/data';
+import Surveys from './redux/pages/surveys';
+import Users from './redux/pages/users';
 
-
-const counterReducer = (state = { value: 0 }, action) => {
-    switch (action.type) {
-        case 'up':
-            return { value: state.value + 1 }
-        case 'down':
-            return { value: state.value - 1 }
-        default:
-            return state
-    }
-}
-
-
+import { store } from './redux/pages/surveys'
 
 const App = () => {
 
-    let store = createStore(counterReducer)
-    store.subscribe(() => console.log(store.getState()))
+    const [value, setValue] = React.useState('');
+
+    store.subscribe(() => {
+        setValue(store.getState());
+    })
     
-
-
-    const up = () => {
-        store.dispatch({ type: 'up' })
-    }
-
-    const down = () => {
-        store.dispatch({ type: 'down' })
-    }
-
-
     return (
         <>
-            <div onClick={() => up()}>up</div>
-            <div onClick={() => down()}>down</div>
+            <Router>
+                <Switch>
+                    <Route exact path='/surveys/'>
+                        <Data endpoint='surveys'>
+                            <Surveys />
+                        </Data>
+                    </Route>
+                    <Route exact path='/users/'>
+                        <Data endpoint='users'>
+                            <Users />
+                        </Data>
+                    </Route>
+                    <Route exact path='/'>
+                        <Link to='/surveys/'>
+                            <div>surveys</div>
+                        </Link>
+                        <Link to='/users/'>
+                            <div>users</div>
+                        </Link>
+                    </Route>
+                </Switch>
+            </Router>
+            <div>{value}</div>
         </>
     )
 
