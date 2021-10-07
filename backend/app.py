@@ -17,9 +17,19 @@ app = Flask(__name__)
     # response.headers.add("Access-Control-Allow-Headers", "*")
     # response.headers.add("Access-Control-Allow-Methods", "*")
 
-@app.route('/path')
-def path(): 
-    response = make_response(jsonify(dict(status = "ok", data = dict(message = "path") )))
+@app.route('/users')
+def users(): 
+    response = make_response(jsonify(dict(status = "ok", data = dict(name = "users") )))
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    response.headers.add("content-type", "application/json")
+    return response
+
+
+@app.route('/surveys')
+def surveys(): 
+    response = make_response(jsonify(dict(status = "ok", data = dict(name = "surveys") )))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
@@ -29,12 +39,10 @@ def path():
 
 @app.route('/')
 def home(): 
-    response = make_response(jsonify(dict(status = "ok", data = dict(message = "home") )))
+    response = make_response(jsonify(dict(status = "ok", data = "home" )))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
     response.headers.add("content-type", "application/json")
     return response
-
-
 
