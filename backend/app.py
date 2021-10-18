@@ -33,6 +33,7 @@ def home():
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
+    response.headers.add("Referrer-Policy", "unsafe-url")
     response.headers.add("content-type", "application/json")
 
     return response

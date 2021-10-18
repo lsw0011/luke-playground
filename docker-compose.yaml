@@ -27,7 +27,7 @@ services:
             - 1113:1113
         volumes:
             - ./flask_container:/code
-        command: flask run --reload --host=0.0.0.0 --port=1113
+        command: flask run --reload --host=0.0.0.0 --port=1113 
 
     frontend:
         container_name: frontend
