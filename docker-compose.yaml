@@ -14,7 +14,20 @@ services:
         volumes:
             - ./backend:/code
         command: flask run --reload --host=0.0.0.0 --port=1111
-
+    
+    flask_container:
+        container_name: flask_container
+        build:
+            context: .
+            dockerfile: ./flask_container/Dockerfile
+        environment:
+            FLASK_APP: code/app.py
+            PYTHONPATH: /code
+        ports:
+            - 1113:1113
+        volumes:
+            - ./flask_container:/code
+        command: flask run --reload --host=0.0.0.0 --port=1113
 
     frontend:
         container_name: frontend
