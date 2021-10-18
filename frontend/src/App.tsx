@@ -1,9 +1,10 @@
 import * as React from 'react'; 
+import Board from './Game/Board';
 
 const App = () => {
 
     return (
-        <div>Hey</div>
+        <Board />
     )
 }
 
