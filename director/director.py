@@ -1,7 +1,8 @@
 import sys
 
-from requests.api import post
-sys.path.insert(1, './common')
+from requests.api import options
+
+sys.path.insert(1, "./common")
 import common.services
 
 
@@ -20,10 +21,12 @@ import common.services
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET', 'POST', 'OPTIONS'])
-def home(): 
-    request.get_json()
-    response = make_response(common.services.post("http://backend:1111", request.get_data()))
+@app.route("/send_dict", methods=["GET", "POST", "OPTIONS"])
+def send_dict(): 
+    if(request.method == "OPTIONS"): 
+        response = make_response()
+    if(request.method == "POST"):
+        response = make_response(common.services.post("http://backend:1111/send_dict", request.get_data()))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
@@ -32,7 +35,18 @@ def home():
 
     return response
 
-@app.route('/test')
+@app.route("/debouncer", methods=["GET", "POST", "OPTIONS"])
+def debouncer(): 
+    response = make_response(jsonify(dict(status = "ok", message = "recieved" )))
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    response.headers.add("content-type", "application/json")
+
+    return response
+
+
+@app.route("/test")
 def test(): 
     response = make_response(jsonify(dict(status = "ok", data = "test" )))
     response.headers.add("Access-Control-Allow-Origin", "*")

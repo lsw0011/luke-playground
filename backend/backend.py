@@ -1,3 +1,8 @@
+import sys
+
+sys.path.insert(1, "./common")
+import common.services
+
 from typing import Dict
 from flask import Flask, send_from_directory, render_template_string, make_response, request
 from flask.helpers import make_response
@@ -29,14 +34,14 @@ def surveys():
     response.headers.add("content-type", "application/json")
     return response
 
-@app.route('/', methods=["GET", "POST", "OPTIONS"])
-def home(): 
-    
-    data = request.get_data().decode('utf-8')
-    if(data != ''):
-        testDict = json.loads(data)
-        print(testDict['a']['b']['c']['d'][2])
-    response = make_response(jsonify(dict(status = "ok", data = "home" )))
+@app.route('/send_dict', methods=["GET", "POST", "OPTIONS"])
+def send_dict(): 
+    if(request.method != "POST"): 
+        response = make_response()
+    if(request.method == "POST"):
+        dataDict = common.services.json_data_to_dict(request.get_data())
+        print(dataDict["a"])
+        response = make_response(jsonify(dict(status = "ok", data = "home" )))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
@@ -44,4 +49,5 @@ def home():
     response.headers.add("content-type", "application/json")
 
     return response
+
 
