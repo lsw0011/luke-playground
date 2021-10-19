@@ -27,8 +27,9 @@ def surveys():
     return response
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST", "OPTIONS"])
 def home(): 
+    # print(request.get_json())
     response = make_response(jsonify(dict(status = "ok", data = "home" )))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")

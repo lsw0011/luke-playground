@@ -5,8 +5,9 @@ RUN apt-get install -y python3-dev build-essential libpq-dev
 
 RUN mkdir code
 WORKDIR /code
-COPY ./frontend ./
+COPY ./backend ./
 
 RUN pip install flask
 RUN pip install flask-assets
+RUN pip install requests
 

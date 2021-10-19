@@ -1,3 +1,9 @@
+import sys
+
+from requests.api import post
+sys.path.insert(1, './common')
+import common.services
+
 
 from logging import error
 from typing import Dict
@@ -7,16 +13,18 @@ from flask.helpers import make_response
 from flask.json import jsonify
 from flask.wrappers import Response
 
+
 import requests
+
 
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST', 'OPTIONS'])
 def home(): 
-    r = requests.get("http://playground:1111").json()
-    response = make_response(r)
+    request.get_json()
+    response = make_response(requests.post("http://backend:1111", headers={'content-type': 'application/json'}, data=request.get_json()).json())
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")

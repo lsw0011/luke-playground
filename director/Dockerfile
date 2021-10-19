@@ -5,7 +5,7 @@ RUN apt-get install -y python3-dev build-essential libpq-dev
 
 RUN mkdir code
 WORKDIR /code
-COPY ./flask_container ./
+COPY ./director ./
 
 RUN pip install flask
 RUN pip install flask-assets
