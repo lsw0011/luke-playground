@@ -31,11 +31,12 @@ def surveys():
 
 @app.route('/', methods=["GET", "POST", "OPTIONS"])
 def home(): 
-    
-    data = request.get_data().decode('utf-8')
-    if(data != ''):
-        testDict = json.loads(data)
-        print(testDict['a']['b']['c']['d'][2])
+    # data = request.get_data().decode('utf-8')
+    # if(data != ''):
+    #     testDict = json.loads(data)
+    #     print(testDict['a']['b']['c']['d'][2])
+
+    print(request.get_data())
     response = make_response(jsonify(dict(status = "ok", data = "home" )))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
