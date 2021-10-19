@@ -13,8 +13,7 @@ from flask.helpers import make_response
 from flask.json import jsonify
 from flask.wrappers import Response
 
-
-import requests
+import common.services
 
 
 
@@ -24,7 +23,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST', 'OPTIONS'])
 def home(): 
     request.get_json()
-    response = make_response(requests.post("http://backend:1111", headers={'content-type': 'application/json'}, data=request.get_json()).json())
+    response = make_response(common.services.post("http://backend:1111", request.get_data()))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")

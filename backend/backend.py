@@ -4,6 +4,9 @@ from flask.helpers import make_response
 from flask.json import jsonify
 from flask.templating import render_template, render_template_string
 
+import ast
+import json
+
 
 app = Flask(__name__)
 
@@ -26,10 +29,13 @@ def surveys():
     response.headers.add("content-type", "application/json")
     return response
 
-
 @app.route('/', methods=["GET", "POST", "OPTIONS"])
 def home(): 
-    # print(request.get_json())
+    
+    data = request.get_data().decode('utf-8')
+    if(data != ''):
+        testDict = json.loads(data)
+        print(testDict['a']['b']['c']['d'][2])
     response = make_response(jsonify(dict(status = "ok", data = "home" )))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
