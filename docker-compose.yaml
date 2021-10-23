@@ -41,3 +41,30 @@ services:
         volumes:
             - ./frontend:/app
         command: npm run start-dev
+
+    database:
+        container_name: database
+        build:
+            context: .
+            dockerfile: ./database/Dockerfile
+        environment:
+            FLASK_APP: code/database.py
+            PYTHONPATH: /code
+        ports:
+            - 1114:1114
+        volumes:
+            - ./database:/code
+            - ./common:/code/common
+        command: flask run --reload --host=0.0.0.0 --port=1114
+
+    database_db:
+        container_name: database_db
+        hostname: database_db
+        image: postgres:13
+        restart: always
+        environment:
+            POSTGRES_DB: database
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: root
+        ports:
+            - 5432:5432
