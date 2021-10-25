@@ -144,17 +144,17 @@ while(run) {
 	userinput = readline.question('');
 	let valid = false;
 	switch (userinput) {
-		case 'w':
+		case ',':
 			valid = movement(gameBoard, up)
 			break;
-		case 's':;
+		case 'o':;
 			valid = movement(gameBoard, down)
 			break;
 		case 'a':
 			valid = movement(gameBoard, left)
 			break;
-		case 'd':
-			valid = movement(gameboard, right)
+		case 'e':
+			valid = movement(gameBoard, right)
 			break;
 		case ':q':
 			console.log('quitting');
