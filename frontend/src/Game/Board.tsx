@@ -139,31 +139,55 @@ const Board = () => {
         }
         return false
     }
-    const [gameArray, setGameArray] = React.useState()
-    const gameArray = new Array(16).fill(0)
-    generateRandomSquare(gameArray)
-    generateRandomSquare(gameArray)
-    window.addEventListener('keydown', (e) => {
-        let change;
+    const [gameArray, setGameArray] = React.useState(new Array(16).fill(0))
+    const [workingArray, setWorkingArray] = React.useState(new Array(16).fill(0))
+    const [change, setChange] = React.useState(false)
+    
+    React.useEffect(() => {
+        const localArray = Object.assign([], gameArray)
+        generateRandomSquare(localArray)
+        generateRandomSquare(localArray)
+        setGameArray(Object.assign([], localArray))
+    }, [])
+
+    const handler = React.useCallback((e) => {
+        const localArray = Object.assign([], gameArray)
+        let move:boolean;
         if(e.code === 'ArrowUp') {
-            change = movement(gameArray, up)
+            move = movement(localArray, up)
         } else if (e.code === 'ArrowDown') {
-            change = movement(gameArray, down)
+            move = movement(localArray, down)
         } else if (e.code === 'ArrowLeft') {
-            change = movement(gameArray, left)
-    	} else if(e.code === 'ArrowRight') {
-            change = movement(gameArray, right)
-	    }
-        if(change){ 
-            generateRandomSquare(gameArray);
-            printBoard(gameArray);
+            move = movement(localArray, left)
+        } else if(e.code === 'ArrowRight') {
+            move = movement(localArray, right)
         }
-    })
+        if(move) {
+            generateRandomSquare(localArray)
+            setWorkingArray(Object.assign([], localArray))
+            setChange(move)
+            window.removeEventListener('keydown', handler)
+        }
+    }, [gameArray])
+
+    React.useEffect(() => {
+        window.addEventListener('keydown', handler)
+        setChange(false)
+    }, [handler])
+    
+    React.useEffect(() => {
+        if(change) {
+            printBoard(workingArray)
+            setGameArray(Object.assign([], workingArray))
+            setChange(false)            
+        }
+    }, [change])
 
     return (
         <>
-            <Grid container spacing={2} style={{height: '100vw'}}>
-            </Grid>
+            {/* <Grid container spacing={2} style={{height: '100vw'}}>
+            </Grid> */}
+            <button onClick={() => console.log(gameArray)}>print</button>
         </>
 
     )
