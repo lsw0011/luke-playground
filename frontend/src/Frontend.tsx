@@ -2,14 +2,13 @@ import * as React from 'react';
 
 const App = () => {
 
-    const testDict = {a:{b:{c:{d: ['e','f','g']}}}};
-    const [field, setField] = React.useState('initial');
-    const [value, setValue] = React.useState('state');
+    const [first, setFirst] = React.useState('first name');
+    const [last, setLast] = React.useState('last name');
     const [backendField, setBackendField] = React.useState('');
     const [backendValue, setBackendValue] = React.useState('');
 
     const send = () => {
-        fetch('http://localhost:1113/', { headers: {'content-type':'application/json'}, method: 'post', body: JSON.stringify(testDict)})
+        fetch('http://localhost:1113/', { headers: {'content-type':'application/json'}, method: 'post', body: JSON.stringify({first_name: first, last_name: last})})
             .then(response => response.json())
             .then(res => console.log(res))
     }    
@@ -17,11 +16,11 @@ const App = () => {
     return (
         <>
             <div>Hey</div>
-            <input value={field} onChange={(e) => setField(e.target.value)} />
-            <input value={value} onChange={(e) => setValue(e.target.value)}/>
+            <input value={first} onChange={(e) => setFirst(e.target.value)} />
+            <input value={last} onChange={(e) => setLast(e.target.value)}/>
             <button onClick={send}>Submit</button>
-            <div> field = {field} </div>
-            <div> value = {value} </div>
+            <div> field = {first} </div>
+            <div> value = {last} </div>
         </>
     )
 }

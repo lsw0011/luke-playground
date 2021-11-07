@@ -40,7 +40,7 @@ def home():
         testDict = json.loads(data)
         print(requests.post("http://database:1114", json.dumps(testDict)).content.decode('utf-8'))
 
-    response = make_response(jsonify(dict(status = "ok", data = "home" )))
+    response = make_response(jsonify(dict(status = "ok", data = "home" ) ))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
