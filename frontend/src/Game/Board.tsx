@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Grid } from '@material-ui/core'
 
 import Square from './Square'
+import GameBoard from './GameBoard'
 
 const Board = () => {
     
@@ -151,6 +152,7 @@ const Board = () => {
     }, [])
 
     const handler = React.useCallback((e) => {
+        console.log(gameArray)
         const localArray = Object.assign([], gameArray)
         let move:boolean;
         if(e.code === 'ArrowUp') {
@@ -185,8 +187,7 @@ const Board = () => {
 
     return (
         <>
-            {/* <Grid container spacing={2} style={{height: '100vw'}}>
-            </Grid> */}
+            <GameBoard gameArray={gameArray} />
             <button onClick={() => console.log(gameArray)}>print</button>
         </>
 
