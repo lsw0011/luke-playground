@@ -1,15 +1,25 @@
-import { Box } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
 import * as React from 'react'
+import Square from './Square';
+
+const useStyles = makeStyles((theme) => ({
+    board: {
+        borderRadius: '6px',            
+        height: '95vw',
+        backgroundColor: '#BBADA0',
+        padding: '0.5rem'
+    },
+    row: {
+        height: '25%'
+    }
+}));
 
 const GameBoard = (props: {gameArray: number[]}) => {
     const [rowifiedArray, setRowifiedArray] = React.useState(new Array(4).fill(new Array(4).fill(0)))
     const [board, setBoard] = React.useState()
-    console.log('rerender props.gameArray', props.gameArray)
-    console.log('rerender rowifiedArray', rowifiedArray)
-    console.log('rerender board', board)
+    const classes = useStyles()
 
     const rows = (gameArray): number[][]  => {
-        console.log('rows', gameArray)
         const rowifiedArray: number[][] = [];
         let currentRow: number[] = [];
         for(let i = 0; i < gameArray.length; i++){
@@ -19,19 +29,21 @@ const GameBoard = (props: {gameArray: number[]}) => {
                 currentRow = [];
             }
         }
-        console.log(rowifiedArray)
         return rowifiedArray;
     }
 
     const constructBoard = (rowifiedArray) => {
         const board = rowifiedArray.map((el, i) => {
-            const row = el.map((el, i) => {
-                return <Box key={i} width={'25%'}>{el}</Box>
+            console.log(el)
+            const row = el.map((el, j) => {
+                return <Square value={el} key={`${i}${j}`} />
             })
             return (
-                <Box display={'flex'} key={i}>
-                    {row}
-                </Box>
+                <>
+                    <Grid className={classes.row} container justifyContent={'center'} wrap={'wrap'}>
+                        {row}
+                    </Grid>
+                </>
             )
         })
         return board
@@ -46,10 +58,11 @@ const GameBoard = (props: {gameArray: number[]}) => {
     }, [rowifiedArray])
 
     return (
-        <>
+        <Grid className={classes.board} >
             {board}
-        </>
+        </Grid>
     )
+
 }
 
 export default GameBoard

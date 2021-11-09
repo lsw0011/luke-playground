@@ -188,7 +188,6 @@ const Board = () => {
     return (
         <>
             <GameBoard gameArray={gameArray} />
-            <button onClick={() => console.log(gameArray)}>print</button>
         </>
 
     )
